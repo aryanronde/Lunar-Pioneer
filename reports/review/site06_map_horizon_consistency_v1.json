@@ -1,0 +1,112 @@
+{
+  "affine_identical_to_prior_horizon_source": true,
+  "common_pixels": {
+    "columns_half_open": [
+      18900,
+      19901
+    ],
+    "rows_half_open": [
+      9199,
+      10200
+    ],
+    "shape_rows_columns": [
+      1001,
+      1001
+    ]
+  },
+  "crs_identical_to_prior_horizon_source": true,
+  "generated_at_utc": "2026-11-02T16:41:05.309281Z",
+  "limitations": [
+    "The prior horizon report did not preserve raw 20 m pixel arrays or per-pixel masks, so historical pixel-by-pixel equality cannot be tested.",
+    "The current map and horizon calculation used one identical in-process TerrainWindow object; its bounded raw values and mask hashes are recorded."
+  ],
+  "map_window": {
+    "columns_half_open": [
+      18650,
+      20150
+    ],
+    "rows_half_open": [
+      8949,
+      10449
+    ]
+  },
+  "prior_horizon_20m_window": {
+    "columns_half_open": [
+      18900,
+      19901
+    ],
+    "rows_half_open": [
+      9199,
+      10200
+    ]
+  },
+  "prior_profile_comparison": {
+    "comparison_source": "reports\\site06_10km_limited_horizon.json",
+    "exactly_equal_finite_bins": 360,
+    "maximum_absolute_20m_profile_difference_deg": 0.0,
+    "old_report_pixel_arrays_available": false,
+    "old_report_pixel_arrays_limitation": "The prior versioned horizon report stores per-window statistics, not its raw samples or NoData mask.",
+    "profile_bins_compared": 360,
+    "rms_20m_profile_difference_deg": 0.0
+  },
+  "raw_values_and_masks_compared_with_prior_horizon_window": false,
+  "schema_version": "1.0",
+  "site_alignment": {
+    "map_and_horizon_received_same_terrainwindow_object": true,
+    "map_rendered_elevations_match_raw_window_after_nodata_masking": true,
+    "pixel_center_coordinates_match_affine": true,
+    "site_marker_xy_m": [
+      84000.01002578877,
+      110000.01079172149
+    ],
+    "site_pixel_center_xy_m": [
+      84010.0,
+      110010.0
+    ],
+    "site_pixel_row_column": [
+      9699,
+      19400
+    ]
+  },
+  "source_identity_identical_to_prior_horizon_source": true,
+  "window_counts": {
+    "analysis_circle_nodata_or_nonfinite_pixels": 0,
+    "analysis_circle_out_of_coverage_pixels": 0,
+    "analysis_circle_pixels": 785456,
+    "analysis_circle_valid_pixels_before_observer_exclusion": 785456,
+    "horizon_samples_after_observer_exclusion": 785455,
+    "map_window_nodata_or_nonfinite_pixels": 0,
+    "map_window_pixels": 2250000
+  },
+  "window_identity": {
+    "affine": [
+      20.0,
+      0.0,
+      -304000.0,
+      0.0,
+      -20.0,
+      304000.0
+    ],
+    "columns_half_open": [
+      18650,
+      20150
+    ],
+    "crs_wkt_sha256": "aa0b4fd163dae46306c9f1ad254ebfd8418e1427cf0467ecb42633090f277b85",
+    "nodata_mask_sha256": "df681a15878e5a26f99715e9feedc432ca38e37f62152f1b1d526696876cb39f",
+    "raw_elevation_window_sha256": "fa42b4106c245b291d9043a09e91315a9eba95c30a2a5d09219cac554db58672",
+    "rows_half_open": [
+      8949,
+      10449
+    ],
+    "same_in_process_terrainwindow_object_for_map_and_horizon": true,
+    "shape_rows_columns": [
+      1500,
+      1500
+    ],
+    "source_id": "lola_20m",
+    "source_url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_80S_20MPP_ADJ.TIF",
+    "window_id": "lola_20m:8949:10449:18650:20150:fa42b4106c245b29",
+    "x_pixel_centers_sha256": "30fb3a32bc86b84362c7d2a4a7a68d48b167c50cbd7829eff3e1c2eac62d9fbe",
+    "y_pixel_centers_sha256": "d2dd046b3d7313e87e72250ee337a04dd343a62f2644f6c3c61df4776ff1e71d"
+  }
+}

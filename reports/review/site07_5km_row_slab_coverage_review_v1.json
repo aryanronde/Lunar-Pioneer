@@ -1,0 +1,1064 @@
+{
+  "schema_version": "terrain-sample-coverage-review/1.0",
+  "review_status": "bounded-sample-audit-complete",
+  "site_id": "Site07",
+  "source_url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/Site07/Site07_final_adj_5mpp_surf.tif",
+  "requested_radius_m": 5000.0,
+  "window_rows_half_open": [
+    600,
+    2601
+  ],
+  "window_columns_half_open": [
+    600,
+    2601
+  ],
+  "slab_rows": 32,
+  "aggregate_response_body_cap_bytes": 27262976,
+  "prior_attempt_response_body_bytes": 65536,
+  "prior_attempt": {
+    "status": "stopped-during-local TIFF header parsing before elevation reads",
+    "request": "GET Range bytes=0-65535",
+    "response_body_bytes": 65536,
+    "parser_issue": "Initial parser rejected unrelated GeoTIFF DOUBLE tag 33550; parser now ignores unrelated tags."
+  },
+  "response_body_bytes_received": 25743872,
+  "completed_slabs": [
+    {
+      "slab_index": 1,
+      "rows_half_open": [
+        600,
+        632
+      ],
+      "circle_centers": 10729,
+      "valid_circle_samples": 10729,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 540672
+    },
+    {
+      "slab_index": 2,
+      "rows_half_open": [
+        632,
+        664
+      ],
+      "circle_centers": 19492,
+      "valid_circle_samples": 19492,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 950272
+    },
+    {
+      "slab_index": 3,
+      "rows_half_open": [
+        664,
+        696
+      ],
+      "circle_centers": 25031,
+      "valid_circle_samples": 25031,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 1359872
+    },
+    {
+      "slab_index": 4,
+      "rows_half_open": [
+        696,
+        728
+      ],
+      "circle_centers": 29403,
+      "valid_circle_samples": 29403,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 1769472
+    },
+    {
+      "slab_index": 5,
+      "rows_half_open": [
+        728,
+        760
+      ],
+      "circle_centers": 33063,
+      "valid_circle_samples": 33063,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 2179072
+    },
+    {
+      "slab_index": 6,
+      "rows_half_open": [
+        760,
+        792
+      ],
+      "circle_centers": 36240,
+      "valid_circle_samples": 36240,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 2588672
+    },
+    {
+      "slab_index": 7,
+      "rows_half_open": [
+        792,
+        824
+      ],
+      "circle_centers": 39061,
+      "valid_circle_samples": 39061,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 2998272
+    },
+    {
+      "slab_index": 8,
+      "rows_half_open": [
+        824,
+        856
+      ],
+      "circle_centers": 41583,
+      "valid_circle_samples": 41583,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 3407872
+    },
+    {
+      "slab_index": 9,
+      "rows_half_open": [
+        856,
+        888
+      ],
+      "circle_centers": 43867,
+      "valid_circle_samples": 43867,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 3817472
+    },
+    {
+      "slab_index": 10,
+      "rows_half_open": [
+        888,
+        920
+      ],
+      "circle_centers": 45953,
+      "valid_circle_samples": 45953,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 4227072
+    },
+    {
+      "slab_index": 11,
+      "rows_half_open": [
+        920,
+        952
+      ],
+      "circle_centers": 47847,
+      "valid_circle_samples": 47847,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 4636672
+    },
+    {
+      "slab_index": 12,
+      "rows_half_open": [
+        952,
+        984
+      ],
+      "circle_centers": 49591,
+      "valid_circle_samples": 49591,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 5046272
+    },
+    {
+      "slab_index": 13,
+      "rows_half_open": [
+        984,
+        1016
+      ],
+      "circle_centers": 51194,
+      "valid_circle_samples": 51194,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 5455872
+    },
+    {
+      "slab_index": 14,
+      "rows_half_open": [
+        1016,
+        1048
+      ],
+      "circle_centers": 52667,
+      "valid_circle_samples": 52667,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 5865472
+    },
+    {
+      "slab_index": 15,
+      "rows_half_open": [
+        1048,
+        1080
+      ],
+      "circle_centers": 54023,
+      "valid_circle_samples": 54023,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 6275072
+    },
+    {
+      "slab_index": 16,
+      "rows_half_open": [
+        1080,
+        1112
+      ],
+      "circle_centers": 55271,
+      "valid_circle_samples": 55271,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 6684672
+    },
+    {
+      "slab_index": 17,
+      "rows_half_open": [
+        1112,
+        1144
+      ],
+      "circle_centers": 56418,
+      "valid_circle_samples": 56418,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 7094272
+    },
+    {
+      "slab_index": 18,
+      "rows_half_open": [
+        1144,
+        1176
+      ],
+      "circle_centers": 57468,
+      "valid_circle_samples": 57468,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 7503872
+    },
+    {
+      "slab_index": 19,
+      "rows_half_open": [
+        1176,
+        1208
+      ],
+      "circle_centers": 58426,
+      "valid_circle_samples": 58426,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 7913472
+    },
+    {
+      "slab_index": 20,
+      "rows_half_open": [
+        1208,
+        1240
+      ],
+      "circle_centers": 59299,
+      "valid_circle_samples": 59299,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 8323072
+    },
+    {
+      "slab_index": 21,
+      "rows_half_open": [
+        1240,
+        1272
+      ],
+      "circle_centers": 60089,
+      "valid_circle_samples": 60089,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 8732672
+    },
+    {
+      "slab_index": 22,
+      "rows_half_open": [
+        1272,
+        1304
+      ],
+      "circle_centers": 60803,
+      "valid_circle_samples": 60803,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 9142272
+    },
+    {
+      "slab_index": 23,
+      "rows_half_open": [
+        1304,
+        1336
+      ],
+      "circle_centers": 61437,
+      "valid_circle_samples": 61437,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 9551872
+    },
+    {
+      "slab_index": 24,
+      "rows_half_open": [
+        1336,
+        1368
+      ],
+      "circle_centers": 61998,
+      "valid_circle_samples": 61998,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 9961472
+    },
+    {
+      "slab_index": 25,
+      "rows_half_open": [
+        1368,
+        1400
+      ],
+      "circle_centers": 62486,
+      "valid_circle_samples": 62486,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 10371072
+    },
+    {
+      "slab_index": 26,
+      "rows_half_open": [
+        1400,
+        1432
+      ],
+      "circle_centers": 62904,
+      "valid_circle_samples": 62904,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 10780672
+    },
+    {
+      "slab_index": 27,
+      "rows_half_open": [
+        1432,
+        1464
+      ],
+      "circle_centers": 63252,
+      "valid_circle_samples": 63252,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 11190272
+    },
+    {
+      "slab_index": 28,
+      "rows_half_open": [
+        1464,
+        1496
+      ],
+      "circle_centers": 63533,
+      "valid_circle_samples": 63533,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 11599872
+    },
+    {
+      "slab_index": 29,
+      "rows_half_open": [
+        1496,
+        1528
+      ],
+      "circle_centers": 63748,
+      "valid_circle_samples": 63748,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 12009472
+    },
+    {
+      "slab_index": 30,
+      "rows_half_open": [
+        1528,
+        1560
+      ],
+      "circle_centers": 63898,
+      "valid_circle_samples": 63898,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 12419072
+    },
+    {
+      "slab_index": 31,
+      "rows_half_open": [
+        1560,
+        1592
+      ],
+      "circle_centers": 63983,
+      "valid_circle_samples": 63983,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 12828672
+    },
+    {
+      "slab_index": 32,
+      "rows_half_open": [
+        1592,
+        1624
+      ],
+      "circle_centers": 64000,
+      "valid_circle_samples": 64000,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 13238272
+    },
+    {
+      "slab_index": 33,
+      "rows_half_open": [
+        1624,
+        1656
+      ],
+      "circle_centers": 63948,
+      "valid_circle_samples": 63948,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 13647872
+    },
+    {
+      "slab_index": 34,
+      "rows_half_open": [
+        1656,
+        1688
+      ],
+      "circle_centers": 63828,
+      "valid_circle_samples": 63828,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 14057472
+    },
+    {
+      "slab_index": 35,
+      "rows_half_open": [
+        1688,
+        1720
+      ],
+      "circle_centers": 63650,
+      "valid_circle_samples": 63650,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 14467072
+    },
+    {
+      "slab_index": 36,
+      "rows_half_open": [
+        1720,
+        1752
+      ],
+      "circle_centers": 63404,
+      "valid_circle_samples": 63404,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 14876672
+    },
+    {
+      "slab_index": 37,
+      "rows_half_open": [
+        1752,
+        1784
+      ],
+      "circle_centers": 63087,
+      "valid_circle_samples": 63087,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 15286272
+    },
+    {
+      "slab_index": 38,
+      "rows_half_open": [
+        1784,
+        1816
+      ],
+      "circle_centers": 62704,
+      "valid_circle_samples": 62704,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 15695872
+    },
+    {
+      "slab_index": 39,
+      "rows_half_open": [
+        1816,
+        1848
+      ],
+      "circle_centers": 62251,
+      "valid_circle_samples": 62251,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 16105472
+    },
+    {
+      "slab_index": 40,
+      "rows_half_open": [
+        1848,
+        1880
+      ],
+      "circle_centers": 61727,
+      "valid_circle_samples": 61727,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 16515072
+    },
+    {
+      "slab_index": 41,
+      "rows_half_open": [
+        1880,
+        1912
+      ],
+      "circle_centers": 61131,
+      "valid_circle_samples": 61131,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 16924672
+    },
+    {
+      "slab_index": 42,
+      "rows_half_open": [
+        1912,
+        1944
+      ],
+      "circle_centers": 60459,
+      "valid_circle_samples": 60459,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 17334272
+    },
+    {
+      "slab_index": 43,
+      "rows_half_open": [
+        1944,
+        1976
+      ],
+      "circle_centers": 59706,
+      "valid_circle_samples": 59706,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 17743872
+    },
+    {
+      "slab_index": 44,
+      "rows_half_open": [
+        1976,
+        2008
+      ],
+      "circle_centers": 58876,
+      "valid_circle_samples": 58876,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 18153472
+    },
+    {
+      "slab_index": 45,
+      "rows_half_open": [
+        2008,
+        2040
+      ],
+      "circle_centers": 57960,
+      "valid_circle_samples": 57960,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 18563072
+    },
+    {
+      "slab_index": 46,
+      "rows_half_open": [
+        2040,
+        2072
+      ],
+      "circle_centers": 56956,
+      "valid_circle_samples": 56956,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 18972672
+    },
+    {
+      "slab_index": 47,
+      "rows_half_open": [
+        2072,
+        2104
+      ],
+      "circle_centers": 55860,
+      "valid_circle_samples": 55860,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 19382272
+    },
+    {
+      "slab_index": 48,
+      "rows_half_open": [
+        2104,
+        2136
+      ],
+      "circle_centers": 54663,
+      "valid_circle_samples": 54663,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 19791872
+    },
+    {
+      "slab_index": 49,
+      "rows_half_open": [
+        2136,
+        2168
+      ],
+      "circle_centers": 53360,
+      "valid_circle_samples": 53360,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 20201472
+    },
+    {
+      "slab_index": 50,
+      "rows_half_open": [
+        2168,
+        2200
+      ],
+      "circle_centers": 51948,
+      "valid_circle_samples": 51948,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 20611072
+    },
+    {
+      "slab_index": 51,
+      "rows_half_open": [
+        2200,
+        2232
+      ],
+      "circle_centers": 50411,
+      "valid_circle_samples": 50411,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 21020672
+    },
+    {
+      "slab_index": 52,
+      "rows_half_open": [
+        2232,
+        2264
+      ],
+      "circle_centers": 48742,
+      "valid_circle_samples": 48742,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 21430272
+    },
+    {
+      "slab_index": 53,
+      "rows_half_open": [
+        2264,
+        2296
+      ],
+      "circle_centers": 46918,
+      "valid_circle_samples": 46918,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 21839872
+    },
+    {
+      "slab_index": 54,
+      "rows_half_open": [
+        2296,
+        2328
+      ],
+      "circle_centers": 44944,
+      "valid_circle_samples": 44944,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 22249472
+    },
+    {
+      "slab_index": 55,
+      "rows_half_open": [
+        2328,
+        2360
+      ],
+      "circle_centers": 42760,
+      "valid_circle_samples": 42760,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 22659072
+    },
+    {
+      "slab_index": 56,
+      "rows_half_open": [
+        2360,
+        2392
+      ],
+      "circle_centers": 40357,
+      "valid_circle_samples": 40357,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 23068672
+    },
+    {
+      "slab_index": 57,
+      "rows_half_open": [
+        2392,
+        2424
+      ],
+      "circle_centers": 37697,
+      "valid_circle_samples": 37697,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 23478272
+    },
+    {
+      "slab_index": 58,
+      "rows_half_open": [
+        2424,
+        2456
+      ],
+      "circle_centers": 34712,
+      "valid_circle_samples": 34712,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 23887872
+    },
+    {
+      "slab_index": 59,
+      "rows_half_open": [
+        2456,
+        2488
+      ],
+      "circle_centers": 31308,
+      "valid_circle_samples": 31308,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 24297472
+    },
+    {
+      "slab_index": 60,
+      "rows_half_open": [
+        2488,
+        2520
+      ],
+      "circle_centers": 27330,
+      "valid_circle_samples": 27330,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 24707072
+    },
+    {
+      "slab_index": 61,
+      "rows_half_open": [
+        2520,
+        2552
+      ],
+      "circle_centers": 22470,
+      "valid_circle_samples": 22470,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 25116672
+    },
+    {
+      "slab_index": 62,
+      "rows_half_open": [
+        2552,
+        2584
+      ],
+      "circle_centers": 15886,
+      "valid_circle_samples": 15886,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 25526272
+    },
+    {
+      "slab_index": 63,
+      "rows_half_open": [
+        2584,
+        2601
+      ],
+      "circle_centers": 3823,
+      "valid_circle_samples": 3823,
+      "nodata_or_nonfinite_circle_samples": 0,
+      "response_body_bytes_cumulative": 25743872
+    }
+  ],
+  "expected_circle_pixel_centers": 3141633,
+  "valid_circle_samples": 3141633,
+  "nodata_or_nonfinite_circle_samples": 0,
+  "failed_slab": null,
+  "horizon_generated": false,
+  "tiff_layout_validated": {
+    "classic_tiff": true,
+    "byte_order": "little",
+    "width": 3200,
+    "height": 3200,
+    "bits_per_sample": [
+      32
+    ],
+    "compression": 1,
+    "rows_per_strip": 1,
+    "strip_count": 3200,
+    "strip_byte_count": 12800,
+    "strips_contiguous": true
+  },
+  "nodata_encoding": "nan",
+  "no_data_value": "nan",
+  "usability_assessment": "Coverage counts describe circle pixel centers only; they do not establish horizon validity.",
+  "request_ranges": [
+    {
+      "start": 0,
+      "end": 65535,
+      "body_bytes": 65536
+    },
+    {
+      "start": 7700808,
+      "end": 8110407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 8110408,
+      "end": 8520007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 8520008,
+      "end": 8929607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 8929608,
+      "end": 9339207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 9339208,
+      "end": 9748807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 9748808,
+      "end": 10158407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 10158408,
+      "end": 10568007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 10568008,
+      "end": 10977607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 10977608,
+      "end": 11387207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 11387208,
+      "end": 11796807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 11796808,
+      "end": 12206407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 12206408,
+      "end": 12616007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 12616008,
+      "end": 13025607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 13025608,
+      "end": 13435207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 13435208,
+      "end": 13844807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 13844808,
+      "end": 14254407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 14254408,
+      "end": 14664007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 14664008,
+      "end": 15073607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 15073608,
+      "end": 15483207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 15483208,
+      "end": 15892807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 15892808,
+      "end": 16302407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 16302408,
+      "end": 16712007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 16712008,
+      "end": 17121607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 17121608,
+      "end": 17531207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 17531208,
+      "end": 17940807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 17940808,
+      "end": 18350407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 18350408,
+      "end": 18760007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 18760008,
+      "end": 19169607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 19169608,
+      "end": 19579207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 19579208,
+      "end": 19988807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 19988808,
+      "end": 20398407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 20398408,
+      "end": 20808007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 20808008,
+      "end": 21217607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 21217608,
+      "end": 21627207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 21627208,
+      "end": 22036807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 22036808,
+      "end": 22446407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 22446408,
+      "end": 22856007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 22856008,
+      "end": 23265607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 23265608,
+      "end": 23675207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 23675208,
+      "end": 24084807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 24084808,
+      "end": 24494407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 24494408,
+      "end": 24904007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 24904008,
+      "end": 25313607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 25313608,
+      "end": 25723207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 25723208,
+      "end": 26132807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 26132808,
+      "end": 26542407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 26542408,
+      "end": 26952007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 26952008,
+      "end": 27361607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 27361608,
+      "end": 27771207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 27771208,
+      "end": 28180807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 28180808,
+      "end": 28590407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 28590408,
+      "end": 29000007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 29000008,
+      "end": 29409607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 29409608,
+      "end": 29819207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 29819208,
+      "end": 30228807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 30228808,
+      "end": 30638407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 30638408,
+      "end": 31048007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 31048008,
+      "end": 31457607,
+      "body_bytes": 409600
+    },
+    {
+      "start": 31457608,
+      "end": 31867207,
+      "body_bytes": 409600
+    },
+    {
+      "start": 31867208,
+      "end": 32276807,
+      "body_bytes": 409600
+    },
+    {
+      "start": 32276808,
+      "end": 32686407,
+      "body_bytes": 409600
+    },
+    {
+      "start": 32686408,
+      "end": 33096007,
+      "body_bytes": 409600
+    },
+    {
+      "start": 33096008,
+      "end": 33313607,
+      "body_bytes": 217600
+    }
+  ]
+}

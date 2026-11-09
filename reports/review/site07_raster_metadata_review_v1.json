@@ -1,0 +1,113 @@
+{
+  "schema_version": "terrain-raster-metadata-review/1.0",
+  "review_status": "read-only-metadata-audit",
+  "site_id": "Site07",
+  "site_name": "Peak Near Shackleton",
+  "product": {
+    "organization": "NASA PGDA",
+    "product_number": 78,
+    "product_name": "Site07_final_adj_5mpp_surf.tif",
+    "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/Site07/Site07_final_adj_5mpp_surf.tif",
+    "server_access": {
+      "head_status": 200,
+      "head_accept_ranges": "bytes",
+      "head_content_length_bytes": 40980808,
+      "head_content_type": "image/tiff",
+      "head_etag": "W/\"2715148-17285c8c960\"",
+      "head_last_modified": "Fri, 05 Jun 2020 18:40:28 GMT",
+      "range_status": 206,
+      "content_range": "bytes 0-65535/40980808",
+      "range_content_length_bytes": 65536,
+      "range_accept_ranges": "bytes",
+      "transfer_scope": "Only the first 65,536 bytes were requested and received. The bounded TIFF prefix may contain bytes beyond TIFF metadata depending on file layout; no elevation window or raster values were read or requested. The full raster was not downloaded."
+    }
+  },
+  "coordinates": {
+    "latitude_deg": -88.811,
+    "longitude_deg": 123.6901,
+    "latitude_type": "planetocentric",
+    "longitude_convention": "east-positive",
+    "longitude_range_deg": "0-360",
+    "source_frame": "MOON_ME_DE421",
+    "source_ephemeris": "DE421",
+    "coordinate_sources": [
+      "NASA Lunar Surface Data Book Revision A, Table A2-2 (site and center values; table does not repeat conventions)",
+      "NASA LOLA RDR coordinate documentation (planetocentric/body-fixed, east-positive longitude 0-360, ME reference system)",
+      "NASA PGDA Product 78 documentation (Site DEMs in MOON_ME / DE421)"
+    ],
+    "projected_center_m": {
+      "x": 30000.19238525766,
+      "y": -20000.152817410097,
+      "status": "derived from the cited coordinates using the observed spherical south-polar stereographic CRS and the current 1,737,400 m provider sphere; no raster samples were read"
+    }
+  },
+  "raster_metadata": {
+    "driver": "GTiff",
+    "raster_dimensions_rows_columns": [3200, 3200],
+    "band_count": 1,
+    "dtype": "float32",
+    "resolution_m": [5.0, 5.0],
+    "affine_gdal_order": [5.0, 0.0, 22000.0, 0.0, -5.0, -12000.0],
+    "pixel_registration": "GeoTIFF AREA_OR_POINT=Area; pixel-center coordinates follow the affine transform.",
+    "nodata_value": "NaN",
+    "scales_reported_by_rasterio": [1.0],
+    "offsets_reported_by_rasterio": [0.0],
+    "explicit_scale_offset_tags_observed": false,
+    "band_units": null,
+    "vertical_reference": null,
+    "source_frame_in_raster_metadata": null,
+    "crs_wkt": "PROJCS[\"unnamed\",GEOGCS[\"unnamed ellipse\",DATUM[\"unknown\",SPHEROID[\"unnamed\",1737400,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+    "projection_parameters": {
+      "projection": "Polar_Stereographic",
+      "latitude_of_origin_deg": -90.0,
+      "central_meridian_deg": 0.0,
+      "false_easting_m": 0.0,
+      "false_northing_m": 0.0,
+      "spheroid_radius_m": 1737400.0,
+      "spheroid_flattening": 0.0,
+      "linear_units": "metre"
+    },
+    "bounds_m": {
+      "left": 22000.0,
+      "bottom": -28000.0,
+      "right": 38000.0,
+      "top": -12000.0
+    },
+    "relevant_tags": {
+      "AREA_OR_POINT": "Area",
+      "NC_GLOBAL#node_offset": "1",
+      "z#_FillValue": "nan",
+      "z#long_name": "z",
+      "z#actual_range": "{-418.9165344238281,1648.679809570312}"
+    }
+  },
+  "provider_comparison": {
+    "current_provider_projection_assumption": "South-polar stereographic, latitude of origin -90 degrees, central meridian 0 degrees, zero false easting/northing, spherical radius 1,737,400 m.",
+    "observed_projection_matches_current_provider_crs_parameters": true,
+    "current_provider_coordinate_assumption": "Planetocentric latitude, east-positive longitude, tagged MOON_ME_DE421 position projected on the 1,737,400 m sphere into the opened raster CRS.",
+    "coordinate_conventions_supported_by_cited_sources": true,
+    "provider_5m_resolution_handling": "The reader uses the opened raster CRS and metadata resolution, but its class name and MAX_WINDOW_SIDE_PX=2048 limit remain relevant; a 10 km radius at 5 m requires over 4,000 pixels across and cannot be read as one provider window.",
+    "projected_center_within_raster_bounds": true,
+    "distance_from_projected_center_to_each_axis_bound_m": {
+      "left": 8000.19238525766,
+      "right": 7999.80761474234,
+      "bottom": 7999.847182589903,
+      "top": 8000.152817410097
+    },
+    "10km_circle_fully_within_raster_bounds": false,
+    "coverage_note": "The raster extent contains the projected Site07 center, but its nearest axis-aligned edge is about 8 km away. A 10 km circular horizon would exceed the raster extent. Valid elevation sampling and NoData distribution were not tested."
+  },
+  "unresolved": {
+    "band_elevation_units": "No band unit was exposed in the bounded metadata read.",
+    "vertical_reference": "No vertical datum/reference was exposed in the bounded metadata read.",
+    "raster_source_frame": "The bounded raster metadata did not encode a named body-fixed frame; MOON_ME_DE421 is supported by the cited PGDA product documentation, not a frame tag observed in the TIFF.",
+    "scale_offset_encoding": "Rasterio reports scale 1 and offset 0, but explicit scale/offset tags were not observed; whether these are driver defaults remains unverified.",
+    "actual_valid_coverage": "No elevation windows were read; raster extent containment does not establish valid samples at the site or across any analysis circle.",
+    "shared_20m_product_suitability": "Not assessed; Product 90 coverage and sampling at Site07 must be checked separately."
+  },
+  "limitations": [
+    "Metadata was parsed from one bounded 65,536-byte prefix only.",
+    "The range response may include non-metadata bytes due to TIFF file layout; no raster values were requested or read.",
+    "No code, production configuration, existing report, dashboard, or terrain profile was changed or generated."
+  ]
+}

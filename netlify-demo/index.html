@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1d39">
+  <meta name="description" content="A static frontend demonstration of the CLPS Lunar Mission Browser at Site06, Nobile Rim 1.">
+  <title>CLPS Lunar Mission Browser · Site06 Demo</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Mission setup">
+      <div class="brand-lockup"><span class="brand-mark">CLPS</span><span class="brand-caption">LUNAR MISSION<br>BROWSER</span></div>
+      <div class="sidebar-rule"></div>
+      <div class="sidebar-kicker">MISSION SETUP</div>
+      <h2>Analysis controls</h2>
+      <p class="sidebar-intro">Explore the saved Site06 example using the same dashboard workflow.</p>
+      <form id="demo-controls">
+        <label for="site">Landing site</label>
+        <select id="site" name="site"><option>Site06 — Nobile Rim 1</option></select>
+
+        <label for="analysis-date">Analysis date <span>UTC</span></label>
+        <input id="analysis-date" type="date" value="2026-10-01">
+
+        <div class="control-grid">
+          <div><label for="start-time">Start time <span>UTC</span></label><input id="start-time" type="time" value="04:05"></div>
+          <div><label for="end-time">End time <span>UTC</span></label><input id="end-time" type="time" value="23:00"></div>
+        </div>
+
+        <label for="cadence">Sampling interval</label>
+        <select id="cadence">
+          <option>15 minutes</option><option>30 minutes</option><option selected>60 minutes</option><option>120 minutes</option><option>360 minutes</option>
+        </select>
+        <button class="run-button" type="submit"><span>Run Analysis</span><span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="sidebar-footnote">Frontend demo controls only. No SPICE or terrain calculation runs in this static site.</p>
+      <div class="sidebar-bottom"><span class="status-light"></span> SCIENCE ENGINE · OFFLINE DEMO</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <div class="eyebrow">MISSION PLANNING <span>·</span> LUNAR SOUTH POLE</div>
+          <h1>CLPS Lunar Mission Browser</h1>
+          <p class="subtitle">Explore lunar south-pole illumination and Earth communication windows at a candidate landing site.</p>
+        </div>
+        <div class="demo-chip"><span></span> STATIC FRONTEND DEMO</div>
+      </header>
+
+      <section class="range-warning" role="note" aria-label="Limited-range terrain analysis notice">
+        <div class="warning-symbol">!</div>
+        <div><strong>Limited-range terrain analysis</strong><p>Visibility uses a sampled terrain profile extending up to <b>10 km</b> from the landing site. This does <b>not</b> establish complete lunar visibility beyond the analyzed range.</p></div>
+        <span class="warning-tag">10 KM RANGE</span>
+      </section>
+
+      <div class="sample-strip"><span class="sample-dot"></span><span><b>Saved example:</b> 2026-10-01 · 04:05–23:00 UTC · 60-minute sampling</span><span class="sample-note">Displayed values are sample data, not a live calculation.</span></div>
+      <div id="run-status" class="run-status" aria-live="polite"></div>
+
+      <section class="metrics-grid" aria-label="Visibility summary">
+        <article class="metric-card metric-sun"><div class="metric-top"><span>Sun visibility</span><span class="metric-icon sun-icon">☼</span></div><div class="metric-value">—</div><div class="metric-foot">Summary not included in saved sample</div></article>
+        <article class="metric-card metric-earth"><div class="metric-top"><span>Earth visibility</span><span class="metric-icon earth-icon">◉</span></div><div class="metric-value">100<span class="unit">%</span></div><div class="metric-foot"><span class="mini-check">✓</span> All 19 saved hourly samples visible</div></article>
+        <article class="metric-card"><div class="metric-top"><span>Total Sun-visible duration</span><span class="metric-icon">◷</span></div><div class="metric-value compact">—</div><div class="metric-foot">Not included in saved sample</div></article>
+        <article class="metric-card"><div class="metric-top"><span>Total Earth-visible duration</span><span class="metric-icon">◷</span></div><div class="metric-value compact">18<span class="unit"> h</span></div><div class="metric-foot">Sampled elapsed duration</div></article>
+        <article class="metric-card"><div class="metric-top"><span>Overlapping Sun + Earth</span><span class="metric-icon">◎</span></div><div class="metric-value compact">—</div><div class="metric-foot">Not included in saved sample</div></article>
+        <article class="metric-card"><div class="metric-top"><span>Longest Sun-visible window</span><span class="metric-icon">⌁</span></div><div class="metric-value compact">—</div><div class="metric-foot">Not included in saved sample</div></article>
+        <article class="metric-card"><div class="metric-top"><span>Longest Earth-visible window</span><span class="metric-icon">⌁</span></div><div class="metric-value compact">18<span class="unit"> h</span></div><div class="metric-foot">19 samples · 04:05–22:05 UTC</div></article>
+      </section>
+
+      <section class="panel map-panel">
+        <div class="section-heading">
+          <div><div class="section-kicker">SITE CONTEXT</div><h2>Lunar South Polar Mission Map</h2><p class="section-subtitle">Site06 — Nobile Rim 1 <span class="separator">/</span> planetocentric ME / DE421</p></div>
+          <div class="coordinate-pill"><span>85.43810° S</span><span class="coord-divider"></span><span>37.36667° E</span></div>
+        </div>
+        <div class="map-layout">
+          <div class="map-frame">
+            <svg id="mission-map" viewBox="0 0 800 530" role="img" aria-label="Interactive south-polar stereographic map centered on Site06 with a 10 kilometer analysis radius"></svg>
+            <div class="map-instructions"><span>Drag to pan</span><span>Scroll to zoom</span><button id="map-reset" type="button">Reset view</button></div>
+          </div>
+          <aside class="map-aside">
+            <div class="map-aside-kicker">LANDING SITE</div>
+            <div class="site-name">Site06</div><div class="site-subname">Nobile Rim 1</div>
+            <div class="map-divider"></div>
+            <div class="coord-row"><span>Latitude</span><b>−85.43810°</b></div>
+            <div class="coord-row"><span>Longitude</span><b>+37.36667° E</b></div>
+            <div class="coord-row"><span>Frame</span><b>MOON_ME_DE421</b></div>
+            <div class="coord-row"><span>Projected X</span><b>84.000 km</b></div>
+            <div class="coord-row"><span>Projected Y</span><b>110.000 km</b></div>
+            <div class="map-divider"></div>
+            <div class="map-legend"><span class="legend-site">●</span><span>Site06 — Nobile Rim 1</span></div>
+            <div class="map-legend"><span class="legend-ring">○</span><span>10 km terrain-analysis range</span></div>
+            <p class="map-caution">The circle marks an analysis range. It does not represent the edge of lunar terrain.</p>
+          </aside>
+        </div>
+        <div class="map-note"><b>10 km limited-range terrain analysis.</b> Terrain visibility is evaluated only within the sampled 10 km analysis range. This does not establish complete lunar visibility beyond that range.</div>
+      </section>
+
+      <section class="panel timeline-panel">
+        <div class="section-heading compact-heading"><div><div class="section-kicker">SAMPLED STATES</div><h2>Visibility timeline</h2><p class="section-subtitle">Markers show saved sample states. No continuous rise/set transition is inferred.</p></div><div class="legend-inline"><span><i class="state-visible"></i> Visible</span><span><i class="state-blocked"></i> Blocked</span><span><i class="state-unavailable"></i> Not in sample</span></div></div>
+        <div class="timeline-wrap"><svg id="visibility-timeline" viewBox="0 0 1000 210" role="img" aria-label="Sampled Sun and Earth visibility timeline"></svg></div>
+        <div class="timeline-note">Earth is confirmed visible at all 19 hourly samples from 04:05 through 22:05 UTC. The saved excerpt includes one Sun sample at 04:05 UTC; remaining Sun states are not shown.</div>
+      </section>
+
+      <section class="panel geometry-panel">
+        <div class="section-heading compact-heading"><div><div class="section-kicker">LOCAL HORIZON COMPARISON</div><h2>Sampled celestial &amp; terrain geometry</h2><p class="section-subtitle">Geometric elevation compared with terrain horizon at the same azimuth.</p></div><span class="table-count">3 REFERENCE ROWS</span></div>
+        <div class="table-scroll"><table><thead><tr><th>UTC timestamp</th><th>Target</th><th>Azimuth</th><th>Celestial elevation</th><th>Terrain horizon</th><th>Clearance</th><th>Status</th></tr></thead><tbody id="geometry-body"></tbody></table></div>
+        <p class="table-footnote">Azimuth was not included in this static sample excerpt. Dashes indicate unavailable sample fields, not zero degrees.</p>
+      </section>
+
+      <section class="panel windows-panel">
+        <div class="section-heading compact-heading"><div><div class="section-kicker">SAMPLED WINDOWS</div><h2>Visibility windows</h2><p class="section-subtitle">Window edges are sample timestamps, not exact rise/set times.</p></div></div>
+        <div class="window-grid">
+          <article class="window-card"><div class="window-title"><span class="window-indicator earth-bg">E</span><h3>Earth visibility windows</h3></div><div class="window-row"><div><b>2026-10-01 04:05 UTC</b><span>Start sample</span></div><div class="window-arrow">→</div><div><b>2026-10-01 22:05 UTC</b><span>End sample</span></div><div class="window-duration">18 h</div></div><div class="window-meta">19 visible samples · 60-minute cadence · sample-based boundaries</div></article>
+          <article class="window-card muted-window"><div class="window-title"><span class="window-indicator sun-bg">S</span><h3>Sun visibility windows</h3></div><p>No full Sun-window summary is included in this saved frontend sample.</p></article>
+          <article class="window-card muted-window"><div class="window-title"><span class="window-indicator overlap-bg">↔</span><h3>Sun / Earth overlap</h3></div><p>Overlap data is not included in this saved frontend sample.</p></article>
+        </div>
+      </section>
+
+      <footer class="page-footer"><div class="footer-brand"><span class="footer-mark">CLPS</span><span>Mission Browser · Site06 Prototype</span></div><p>This is a frontend demonstration using saved representative sample data. The live scientific engine uses NASA SPICE geometry and LOLA terrain data; this static page does not execute those calculations.</p><div class="footer-meta">MOON_ME_DE421 <span>·</span> SAMPLE-BASED <span>·</span> LIMITED-RANGE</div></footer>
+    </main>
+  </div>
+</body>
+</html>
