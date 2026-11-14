@@ -1,0 +1,75 @@
+{
+  "schema_version": "terrain-sample-coverage-review/1.0",
+  "review_status": "incomplete-bounded-read",
+  "site_id": "Site07",
+  "site_name": "Peak Near Shackleton",
+  "source_url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/Site07/Site07_final_adj_5mpp_surf.tif",
+  "metadata_review_reference": "reports/review/site07_raster_metadata_review_v1.json",
+  "requested_radius_m": 5000.0,
+  "projected_center_m": [
+    30000.19238525766,
+    -20000.152817410097
+  ],
+  "raster_bounds_m": {
+    "left": 22000.0,
+    "bottom": -28000.0,
+    "right": 38000.0,
+    "top": -12000.0
+  },
+  "geometric_coverage": {
+    "circle_fully_inside_raster_extent": true,
+    "nearest_axis_aligned_bound_distance_m": 7999.80761474234,
+    "minimum_margin_beyond_requested_radius_m": 2999.80761474234,
+    "note": "This confirms geometric extent only; it does not establish valid elevation samples or NoData distribution."
+  },
+  "requested_window": {
+    "rows_half_open": [
+      600,
+      2601
+    ],
+    "columns_half_open": [
+      600,
+      2601
+    ],
+    "shape_rows_columns": [
+      2001,
+      2001
+    ],
+    "pixel_spacing_m": [
+      5.0,
+      5.0
+    ],
+    "requested_square_float32_bytes": 16016004,
+    "circle_pixel_centers_expected": 3141633
+  },
+  "storage_and_transfer_estimate": {
+    "is_tiled": false,
+    "block_shape_rows_columns": [
+      1,
+      3200
+    ],
+    "intersecting_full_width_scanlines": 2001,
+    "estimated_full_width_scanline_payload_bytes": 25612800,
+    "estimated_payload_mib": 24.4,
+    "total_file_size_bytes": 40980808,
+    "actual_http_bytes_transferred": null,
+    "transfer_note": "Estimate is based on 2,001 full-width float32 scanlines. The actual transfer was not captured; the failed RasterIO call may have transferred some blocks before failing."
+  },
+  "sample_read": {
+    "status": "failed-before-array-returned",
+    "returned_window_rows_half_open": null,
+    "returned_window_columns_half_open": null,
+    "valid_finite_circle_samples": null,
+    "nodata_or_nonfinite_circle_samples": null,
+    "full_window_valid_samples": null,
+    "failure": "Rasterio/GDAL TIFFReadEncodedStrip failed at row 2239 with 'got 0 bytes, expected 12800'; no elevation array was returned.",
+    "failure_origin": "Unresolved; the response did not include enough HTTP range diagnostics to distinguish server response behavior from a TIFF strip-read issue."
+  },
+  "horizon_generated": false,
+  "usability_assessment": "Geometrically covered, but sample usability is unverified because the bounded raster read failed before counts could be calculated.",
+  "limitations": [
+    "No elevation values were analyzed or stored by the failed RasterIO call.",
+    "No retry or additional network request was made under the one-time approval.",
+    "This review-only record does not modify Site06 production files, configuration, or reports."
+  ]
+}

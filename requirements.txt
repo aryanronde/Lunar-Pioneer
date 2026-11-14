@@ -1,0 +1,7 @@
+SpiceyPy==8.2.0
+numpy==2.5.3
+pandas>=3.0,<4
+rasterio>=1.4,<2
+pyproj>=3.7,<4
+streamlit>=1.40,<2
+plotly>=5.18,<7

@@ -1,0 +1,21 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+
+# Test and cache files
+.pytest_cache/
+.mypy_cache/
+.streamlit/secrets.toml
+
+# Editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+# Large SPICE ephemeris kernel
+data/spice/de440.bsp

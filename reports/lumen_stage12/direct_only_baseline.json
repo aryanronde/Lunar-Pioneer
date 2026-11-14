@@ -1,0 +1,239 @@
+{
+  "assumed_inputs": [
+    "mission start 2026-01-01T00:00:00Z; duration 120 s; time step 60 s",
+    "station direct array 10 m^2 at 1361 W/m^2 (1 AU), conversion efficiency 0.2, incidence 0 deg",
+    "station load 200 W; charging efficiency 0.9; protected reserve 5000 Wh",
+    "station initial battery: 10000 Wh; nominal capacity: 20000 Wh",
+    "rover initial battery: 800 Wh; nominal capacity: 1000 Wh",
+    "rover charging efficiency 0.9; safe-return requirement 100 Wh",
+    "receiver areas: station 100 m^2, rover 100000 m^2",
+    "PV conversion efficiencies: station 0.2, rover 0.3",
+    "mirror area 1e+06 m^2; reflectivity 0.9; pointing error 0 deg",
+    "mirror irradiance input 1361 W/m^2 is an explicit local-at-mirror value",
+    "orbit altitude 100 km; model is assumed kinematic",
+    "identical initial station/rover battery states across scenarios",
+    "normal and direct-only scenarios share the same timeline; baseline disables reflector assistance",
+    "rescue scenario applies stranded survival load after configured stranding offset",
+    "station normal discharge uses energy_storage reserve-protected discharge",
+    "site coordinates are fixed in a lunar body-fixed frame during the run",
+    "demo fixture Sun vector: (149597870.7, 0, 0) km in synthetic Moon-centred setup",
+    "demo mirror irradiance: 1361 W/m^2 explicitly supplied locally at the mirror",
+    "demo fixture frame transformations are identity operations; not SPICE-derived",
+    "demo fixture terrain horizons are synthetic zero-degree profiles; not LOLA/DEM observations",
+    "all station, rover, reflector, orbit and mission timeline values are illustrative assumptions"
+  ],
+  "calculated": {
+    "battery_change_Wh": {
+      "rover": 0.2366666666666788,
+      "station": 74.99333333333198
+    },
+    "conversion_losses_Wh": 371.40333333333336,
+    "curtailed_energy_Wh": 0.0,
+    "electrical_energy_Wh": {
+      "direct_generation": 90.73333333333333,
+      "receiver_reflected_generation": 0.0
+    },
+    "emergency_recovery": {
+      "energy_deficit": null,
+      "energy_delivered_to_battery": 0.0,
+      "safe_return_status": "PASS",
+      "scenario_recovery_success": null
+    },
+    "energy_balance_residual_Wh": 7.086553566182374e-13,
+    "ledger_status": "PASS",
+    "optical_energy_Wh": {
+      "mirror_incident": 0.0,
+      "mirror_reflected": 0.0,
+      "receiver_intercepted": 0.0
+    },
+    "transfer_losses_Wh": 0.033333333333333326
+  },
+  "checks": [
+    {
+      "detail": "Time-step sum 453.666666667 Wh; scenario total 453.666666667 Wh.",
+      "name": "solar-input-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 90.7333333333 Wh; scenario total 90.7333333333 Wh.",
+      "name": "direct-generation-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 0 Wh; scenario total 0 Wh.",
+      "name": "reflected-generation-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 6.66666666667 Wh; scenario total 6.66666666667 Wh.",
+      "name": "station-load-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 0.333333333333 Wh; scenario total 0.333333333333 Wh.",
+      "name": "rover-consumption-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 0.57 Wh; scenario total 0.57 Wh.",
+      "name": "rover-delivery-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 371.403333333 Wh; scenario total 371.403333333 Wh.",
+      "name": "conversion-loss-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 0 Wh; scenario total 0 Wh.",
+      "name": "curtailment-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 0.0333333333333 Wh; scenario total 0.0333333333333 Wh.",
+      "name": "transfer-loss-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 0 Wh; scenario total 0 Wh.",
+      "name": "receiver-optical-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 0 Wh; scenario total 0 Wh.",
+      "name": "receiver-electrical-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 0 Wh; scenario total 0 Wh.",
+      "name": "receiver-stored-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "Time-step sum 453.666666667 Wh; scenario total 453.666666667 Wh.",
+      "name": "direct-solar-input-sum",
+      "status": "PASS"
+    },
+    {
+      "detail": "All station states remain within capacity.",
+      "name": "station-battery-bounds",
+      "status": "PASS"
+    },
+    {
+      "detail": "Station states remain above the normal operational floor.",
+      "name": "station-reserve",
+      "status": "PASS"
+    },
+    {
+      "detail": "All rover states remain within capacity.",
+      "name": "rover-battery-bounds",
+      "status": "PASS"
+    },
+    {
+      "detail": "All rover states remain above their configured DoD floor.",
+      "name": "rover-operational-floor",
+      "status": "PASS"
+    },
+    {
+      "detail": "Per-step direct plus mirror input equals modeled input; incident mirror energy equals reflection loss plus reflected energy.",
+      "name": "optical-input-and-reflection-balance",
+      "status": "PASS"
+    },
+    {
+      "detail": "Reflected electrical output is counted once from receiver outputs.",
+      "name": "receiver-to-reflected-electrical-balance",
+      "status": "PASS"
+    },
+    {
+      "detail": "Independently calculated residual 7.08655356618e-13 Wh; simulation-reported residual -2.00839345155e-13 Wh.",
+      "name": "reported-residual-consistency",
+      "status": "PASS"
+    },
+    {
+      "detail": "Maximum per-step residual 6.67910171614e-13 Wh; aggregate residual 7.08655356618e-13 Wh. Stored energy is counted only via battery-state change.",
+      "name": "independent-step-energy-balance",
+      "status": "PASS"
+    },
+    {
+      "detail": "No reflector-generated electrical energy is credited.",
+      "name": "direct-only-isolation",
+      "status": "PASS"
+    },
+    {
+      "detail": "No reflected electrical energy is credited on blocked or zero-capture paths.",
+      "name": "visibility-and-capture-gating",
+      "status": "PASS"
+    },
+    {
+      "detail": "Modeled safe-return condition holds at the final recorded step.",
+      "name": "safe-return-state",
+      "status": "PASS"
+    },
+    {
+      "detail": "Tagged finite Moon-centred geometry is present at every step.",
+      "name": "geometry-completeness",
+      "status": "PASS"
+    }
+  ],
+  "known_limitations": [
+    "Circular lunar orbit is assumed kinematic and is not stability-validated.",
+    "Receiver capture uses a uniform paraxial solar disc, a projected-area-equivalent circular receiver, and midpoint integration over the rectangular mirror aperture.",
+    "Diffraction, solar limb darkening, mirror surface slope errors, structural occlusion, and thermal behavior are not modeled.",
+    "Terrain horizons are local and limited range; absent or incomplete terrain leaves visibility unknown.",
+    "Pointing-offset lateral beam overlap is not modeled; nonzero pointing error must remain unknown.",
+    "Successful model energy accounting is not evidence of operational or real lunar mission feasibility."
+  ],
+  "model_version": "optics-receiver-v2-unified-recovery-v1",
+  "operational_feasibility": "UNKNOWN",
+  "provenance": {
+    "calculation_engine": "existing core.lumen simulation and validation APIs",
+    "emergency_recovery_capture_model": "shared core.lumen.lumen_receiver receiver result; no bounding-circle fallback",
+    "measured_inputs": [],
+    "model_version": "optics-receiver-v2-unified-recovery-v1",
+    "orbit": "assumed kinematic circular orbit; not SPICE-propagated or stability-validated",
+    "receiver_capture_model": "core.lumen.lumen_receiver.calculate_receiver_power; finite solar disc and rectangular mirror aperture midpoint integration",
+    "terrain": "synthetic test horizon only; real site terrain is UNKNOWN",
+    "time_and_geometry": "deterministic synthetic demo provider; no SPICE kernels queried"
+  },
+  "receiver_capture_status": "UNKNOWN",
+  "scenario_audit_status": "PASS",
+  "scenario_label": "Matched direct-only baseline",
+  "scenario_name": "direct_only_baseline",
+  "schema_version": 1,
+  "time_series": [
+    {
+      "direct_generation_Wh": 45.36666666666667,
+      "emergency_energy_deficit_Wh": null,
+      "emergency_energy_delivered_Wh": 0.0,
+      "mirror_rover_visibility": true,
+      "mirror_station_visibility": true,
+      "mirror_sun_visibility": true,
+      "receiver_capture_status": "UNKNOWN",
+      "reflected_generation_Wh": 0.0,
+      "rover_battery_Wh": 800.1183333333333,
+      "sample_utc": "2026-01-01T00:00:30Z",
+      "station_battery_Wh": 10037.496666666666
+    },
+    {
+      "direct_generation_Wh": 45.36666666666667,
+      "emergency_energy_deficit_Wh": null,
+      "emergency_energy_delivered_Wh": 0.0,
+      "mirror_rover_visibility": true,
+      "mirror_station_visibility": true,
+      "mirror_sun_visibility": true,
+      "receiver_capture_status": "UNKNOWN",
+      "reflected_generation_Wh": 0.0,
+      "rover_battery_Wh": 800.2366666666667,
+      "sample_utc": "2026-01-01T00:01:30Z",
+      "station_battery_Wh": 10074.993333333332
+    }
+  ],
+  "unknown_evidence": [
+    "No measured or authoritative lunar-site illumination data is included.",
+    "No measured terrain profile is included; synthetic clear horizons exercise code paths only.",
+    "No operational orbital perturbation/stability analysis is included.",
+    "Hardware performance, reflector pointing, thermal behavior, and mission operations are unvalidated.",
+    "Operational mission feasibility remains UNKNOWN even when the synthetic calculation ledger passes."
+  ],
+  "visibility_status": "NO_REFLECTOR_PATH"
+}

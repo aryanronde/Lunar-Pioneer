@@ -1,0 +1,99 @@
+{
+  "schema_version": "site-source-record-review/1.0",
+  "review_status": "proposed-not-production",
+  "site_id": "Site07",
+  "name": "Peak Near Shackleton",
+  "coordinates": {
+    "latitude_deg": -88.811,
+    "longitude_deg": 123.6901,
+    "published_values_status": "source-supported",
+    "latitude_type": "planetocentric",
+    "latitude_type_evidence": {
+      "status": "source-supported",
+      "reference": "NASA LOLA RDR coordinate documentation",
+      "detail": "The cited coordinate documentation describes LOLA coordinates as planetocentric. The Lunar Surface Data Book Table A2-2 supplies the Site07 center values but does not repeat this convention."
+    },
+    "longitude_convention": "east-positive",
+    "longitude_range_deg": "0-360",
+    "longitude_convention_evidence": {
+      "status": "source-supported",
+      "reference": "NASA LOLA RDR coordinate documentation",
+      "detail": "The cited coordinate documentation specifies east-positive longitude in the 0-360 degree range. The Lunar Surface Data Book Table A2-2 supplies the Site07 center values but does not repeat this convention."
+    },
+    "source_frame": "MOON_ME_DE421",
+    "source_ephemeris": "DE421",
+    "frame_evidence": {
+      "status": "source-supported",
+      "references": [
+        "NASA LOLA RDR coordinate documentation: ME reference system",
+        "NASA PGDA Product 78 documentation: Site DEMs in MOON_ME / DE421"
+      ],
+      "detail": "The cited RDR documentation establishes the ME reference system; Product 78 documentation supplies the DE421 realization for Site DEMs. The Data Book table itself does not repeat the frame or ephemeris."
+    }
+  },
+  "sources": [
+    {
+      "organization": "NASA",
+      "document": "Lunar Surface Data Book",
+      "revision": "A",
+      "location": "Table A2-2",
+      "entry": "Site07 / Peak Near Shackleton",
+      "supports": "Published site center coordinates: latitude -88.811 degrees, longitude +123.6901 degrees."
+    },
+    {
+      "organization": "NASA LOLA",
+      "document": "RDR coordinate documentation",
+      "supports": "Planetocentric/body-fixed coordinates; east-positive longitude 0-360; ME reference system."
+    },
+    {
+      "organization": "NASA PGDA",
+      "product_number": 78,
+      "product_name": "Site07_final_adj_5mpp_surf.tif",
+      "documentation_supports": "Site DEMs are 5 m/pixel south-polar stereographic GeoTIFFs in MOON_ME / DE421."
+    },
+    {
+      "organization": "NASA PGDA",
+      "product_number": 90,
+      "document": "Shared 20 m south-polar DEM documentation",
+      "supports": "Shared 20 m product documentation reference only; suitability/coverage at Site07 has not been checked."
+    }
+  ],
+  "product": {
+    "product_number": 78,
+    "product_name": "Site07_final_adj_5mpp_surf.tif",
+    "documented_nominal_resolution_m": 5,
+    "documented_projection_family": "south-polar stereographic",
+    "documented_frame": "MOON_ME_DE421",
+    "actual_raster_metadata_status": "unverified-no-dem-access-performed",
+    "exact_crs_wkt": null,
+    "affine_transform": null,
+    "pixel_registration": null,
+    "elevation_units": null,
+    "vertical_reference": null,
+    "nodata_value": null,
+    "scale": null,
+    "offset": null,
+    "product_coverage_at_site": null,
+    "metadata_unavailable": {
+      "/product/exact_crs_wkt": "Exact CRS WKT requires inspection of the Site07 raster metadata.",
+      "/product/affine_transform": "Affine transform requires inspection of the Site07 raster metadata.",
+      "/product/pixel_registration": "Pixel registration requires inspection of the Site07 raster metadata.",
+      "/product/elevation_units": "Band units require inspection of the Site07 raster metadata.",
+      "/product/vertical_reference": "Vertical reference requires inspection of the Site07 raster metadata.",
+      "/product/nodata_value": "NoData metadata requires inspection of the Site07 raster metadata.",
+      "/product/scale": "Band scale requires inspection of the Site07 raster metadata.",
+      "/product/offset": "Band offset requires inspection of the Site07 raster metadata.",
+      "/product/product_coverage_at_site": "Coverage requires inspection of Site07 raster bounds and valid samples."
+    }
+  },
+  "shared_20m_dem": {
+    "product_number": 90,
+    "product_suitability_for_site07": "unverified",
+    "detail": "Do not assume the shared 20 m product covers Site07 or provides valid samples there until its coverage and sampling are checked."
+  },
+  "review_limitations": [
+    "The cited NASA documents were not fetched or inspected in this offline review; source statements above reflect the references and descriptions supplied for this review.",
+    "No DEM was opened, read, or downloaded.",
+    "This proposed record is not a production site configuration and is not used by the dashboard."
+  ]
+}

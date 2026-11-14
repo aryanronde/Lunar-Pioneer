@@ -1,0 +1,97 @@
+{
+  "schema_version": "site-terrain-evidence-status-review/1.0",
+  "review_status": "offline-evidence-review",
+  "site_id": "Site07",
+  "site_name": "Peak Near Shackleton",
+  "source": {
+    "product_name": "Site07_final_adj_5mpp_surf.tif",
+    "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/Site07/Site07_final_adj_5mpp_surf.tif",
+    "metadata_report": "reports/review/site07_raster_metadata_review_v1.json",
+    "completed_coverage_report": "reports/review/site07_5km_row_slab_coverage_review_v1.json",
+    "earlier_failed_coverage_report": "reports/review/site07_5km_sample_coverage_review_v1.json"
+  },
+  "evidence_categories": {
+    "geometric_dem_coverage": {
+      "status": "confirmed-for-5km-circle",
+      "evidence": {
+        "projected_center_m": [30000.19238525766, -20000.152817410097],
+        "raster_bounds_m": {
+          "left": 22000.0,
+          "bottom": -28000.0,
+          "right": 38000.0,
+          "top": -12000.0
+        },
+        "nearest_axis_aligned_bound_distance_m": 7999.80761474234,
+        "requested_radius_m": 5000.0,
+        "circle_fully_inside_raster_extent": true
+      },
+      "limitation": "This establishes geometric extent only, not valid values or consistency among separately fetched ranges. A 10 km circle is not fully contained."
+    },
+    "valid_elevation_sample_coverage": {
+      "status": "confirmed-by-completed-bounded-audit",
+      "evidence": {
+        "coverage_report_status": "bounded-sample-audit-complete",
+        "window_rows_half_open": [600, 2601],
+        "window_columns_half_open": [600, 2601],
+        "completed_row_slabs": 63,
+        "expected_circle_pixel_centers": 3141633,
+        "valid_circle_samples": 3141633,
+        "nodata_or_nonfinite_circle_samples": 0,
+        "response_body_bytes_received": 25743872,
+        "aggregate_response_body_cap_bytes": 27262976,
+        "horizon_generated": false
+      },
+      "limitation": "The completed report establishes valid samples as counted by that audit. It does not record per-response validators, so these samples are not yet proven to come from one stable source version. The earlier GDAL read failure is superseded for sample counts by the later completed row-slab audit."
+    },
+    "source_version_consistency": {
+      "status": "unverified-blocking-generation",
+      "persisted_head_response": {
+        "status": 200,
+        "accept_ranges": "bytes",
+        "content_length_bytes": 40980808,
+        "etag": "W/\"2715148-17285c8c960\"",
+        "etag_strength": "weak",
+        "last_modified": "Fri, 05 Jun 2020 18:40:28 GMT"
+      },
+      "persisted_metadata_prefix_response": {
+        "status": 206,
+        "content_range": "bytes 0-65535/40980808",
+        "content_length_bytes": 65536,
+        "etag": null,
+        "etag_explanation": "The metadata report does not record an ETag for this range response; null means not persisted, not confirmed absent."
+      },
+      "most_recent_prefix_attempt": {
+        "status": 206,
+        "result": "Stopped before body use because the response did not provide a usable strong ETag for If-Match.",
+        "exact_etag_value": null,
+        "explanation": "The failed attempt's complete response headers were not saved in the repository; the ETag may have been absent or weak, and its exact value cannot be recovered from the saved evidence."
+      },
+      "completed_row_slab_responses": {
+        "responses_or_slabs": 63,
+        "etag_values": null,
+        "last_modified_values": null,
+        "if_match_sent": null,
+        "content_range_and_content_length_per_response": null,
+        "explanation": "The completed coverage report records requested byte ranges and aggregate byte totals, but not per-response validator or conditional-request headers."
+      },
+      "last_modified_substitute": {
+        "established_safe": false,
+        "explanation": "A Last-Modified date is recorded, but no saved server documentation or response demonstrates that this endpoint honors If-Unmodified-Since on range GETs. HTTP date validators also have coarser time precision than a strong entity tag and do not provide the same byte-for-byte representation identity assurance. It must not be substituted for the strong ETag/If-Match guard on current evidence."
+      }
+    }
+  },
+  "evidence_required_to_unblock_generation": [
+    "An authoritative strong ETag for the exact Site07 TIFF representation, obtained from an approved bounded response, with the exact value preserved in the audit record.",
+    "For every metadata and elevation range response: record status, ETag, Content-Range, Content-Length, and request Range; send If-Match with the initial strong ETag on each subsequent request and require the same strong ETag in each response.",
+    "Confirm that the requested ranges identify the same total representation length and that all expected byte ranges were returned completely under the existing aggregate byte cap.",
+    "If the endpoint cannot provide a strong ETag, obtain NASA/host documentation for an immutable versioned object or authoritative checksum that binds the exact bytes; alternatively, design and approve a single-response bounded strategy and verify its response format and byte cap before use."
+  ],
+  "scope_and_safety": {
+    "network_requests_made_for_this_review": false,
+    "dem_read_for_this_review": false,
+    "horizon_generated": false,
+    "reader_strong_etag_guard_changed": false,
+    "site06_production_behavior_changed": false,
+    "site07_generation_status": "blocked-pending-source-version-consistency-evidence"
+  }
+}
