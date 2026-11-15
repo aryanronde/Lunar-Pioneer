@@ -140,8 +140,8 @@ listed in the setup instructions below.
 | `core/spice_engine.py` | Uses SPICE kernels for UTC-to-ET conversion and Sun geometry in J2000; transforms geometry to `MOON_PA_DE440`. |
 | `core/lunar_frame_bridge.py` | Rotates vectors between `MOON_ME_DE421` and `MOON_PA_DE440` using explicit DE421/DE440 frames. |
 | `core/lumen/lumen_visibility.py` | Tests lunar-sphere occultation and site-local terrain horizon clearance; keeps incomplete terrain as unknown. |
-| `core/lumen/lumen_optics.py` | Computes Sun/mirror/target directions, ideal mirror normal, specular reflection residual, finite-Sun footprint estimate, and optical power. |
-| `core/lumen/lumen_receiver.py` | Estimates projected receiver area, intercepted optical power, and electrical output. |
+| `core/lumen/lumen_optics.py` | Computes ideal mirror reflection, finite-Sun angular radius, a conservative aperture-aware beam-footprint bound, and optical power. |
+| `core/lumen/lumen_receiver.py` | Estimates interception with midpoint quadrature over the mirror aperture and analytic finite-Sun disc/receiver overlap, then computes electrical output. |
 | `core/lumen/station_power.py` | Separates direct and reflected station generation, station loads, conversion losses, and curtailment. |
 | `core/lumen/energy_storage.py` | Applies battery capacity, reserve, charging/discharging efficiency, and power limits. |
 | `core/lumen/rover_energy.py` | Accounts for rover energy use and charging, departure checks, safe-return energy, and operating states. |
@@ -175,13 +175,28 @@ directions; the reflection law is checked against the target direction. The
 model calculates mirror incidence and reflected optical power using supplied
 mirror area and reflectivity.
 
-Because the Sun has finite angular size, the reflected beam diverges. The
-receiver module reuses the footprint diameter from the optics result, computes
-projected receiver area from its normal, and estimates capture using a uniform
-circular-footprint area ratio. It then applies the specified optical and
-photovoltaic/electrical efficiencies. A flat mirror redirects sunlight; it
-does not focus or concentrate it. The circular uniform footprint is a
-first-order approximation, not validated optical propagation.
+The optics model derives the Sun's angular radius from its assumed physical
+radius and mirror distance. It reports a conservative footprint diameter from
+that angular spread and the rectangular mirror aperture's diagonal; this
+diameter is a bound, not an assumption that the illuminated beam has uniform
+surface brightness. A flat mirror redirects the diverging sunlight; it does
+not focus or concentrate it.
+
+For receiver capture, the code midpoint-samples the rectangular mirror
+aperture. At each sample, it computes the analytic overlap between a uniform,
+paraxial finite-Sun disc at the receiver plane and a circular receiver
+aperture whose area represents the receiver's projected area. The sampled
+overlap fractions are averaged to estimate captured reflected power. The
+receiver's orientation and configured in-plane center offsets affect this
+overlap. Optical transmission, photovoltaic, and electrical conversion
+efficiencies are applied as separate stages after interception. This is a
+first-order finite-Sun and ray-overlap estimate, not validated optical
+propagation or demonstrated hardware performance.
+
+The receiver approximation does not model diffraction, solar limb darkening,
+mirror slope error, structural occlusion, thermal effects, or the exact tilted
+receiver ellipse. The result depends on supplied mirror/receiver assumptions
+and the configured finite quadrature resolution.
 
 ### Energy accounting and emergency recovery
 
@@ -379,11 +394,14 @@ operational feasibility remains `UNKNOWN`.
   perturbations, third-body effects, solar radiation pressure, navigation,
   maneuvers, attitude control, and station keeping. Orbital stability and
   operational performance are not established.
-- The finite-Sun uniform circular footprint and receiver projected-area ratio
-  are first-order estimates. They do not model diffraction, a validated
-  irradiance distribution, structures/occlusion, or lateral beam overlap for
-  pointing error. Where pointing capture is not modeled, the result remains
-  unknown or is not credited.
+- LUMEN's receiver model is a first-order finite-Sun overlap estimate using a
+  uniform paraxial solar disc, a projected-area-equivalent circular receiver,
+  and finite-resolution midpoint quadrature over a uniformly specular
+  rectangular mirror. It does not model diffraction, limb darkening, mirror
+  slope error, structural occlusion, thermal effects, or the exact tilted
+  receiver ellipse. It is not validated optical propagation. Pointing capture
+  is represented by the configured mirror-normal angular error; unmodeled
+  pointing behavior remains unknown or is not credited.
 - Sampled geometry is treated as constant over each mission time step; samples
   do not guarantee continuous visibility between epochs.
 - Horizon profiles have finite declared ranges and may have incomplete bins.
