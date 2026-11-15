@@ -5,8 +5,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import lru_cache
 import math
+import os
+from pathlib import Path
 
 import numpy as np
+from rasterio.errors import RasterioError
 
 from core.lunar_coordinates import LunarSiteRecord, planetocentric_latlon_to_moon_me_de421
 from core.terrain_provider import (
@@ -16,6 +19,7 @@ from core.terrain_provider import (
     MOON_REFERENCE_RADIUS_M,
     MOON_ME_DE421,
     TaggedMoonPosition,
+    TerrainAccessError,
     TerrainMetadata,
     TerrainWindow,
     project_moon_me_de421_position,
@@ -24,6 +28,55 @@ from core.terrain_provider import (
 
 LOLA20M_MAP_LABEL = "NASA LOLA 20 m DEM — MOON_ME / DE421"
 TERRAIN_MARGIN_M = 5_000.0
+LOLA20M_FILENAME = Path(LOLA20M_URL).name
+
+
+class TerrainContextUnavailable(RuntimeError):
+    """The optional bounded LOLA context could not be opened or read."""
+
+
+def _local_lola_cache_candidates() -> tuple[Path, ...]:
+    """Known local cache locations; no directory tree or full DEM scan occurs."""
+    candidates = [
+        Path(__file__).resolve().parent / "data" / LOLA20M_FILENAME,
+        Path(__file__).resolve().parents[1] / "data" / LOLA20M_FILENAME,
+        Path.home() / ".cache" / "clps-lunar-mission-browser" / "terrain" / LOLA20M_FILENAME,
+    ]
+    local_app_data = os.environ.get("LOCALAPPDATA")
+    if local_app_data:
+        candidates.append(Path(local_app_data) / "CLPS-Lunar-Mission-Browser" / "terrain" / LOLA20M_FILENAME)
+    configured_cache = os.environ.get("CLPS_LOLA_DEM_CACHE_DIR")
+    if configured_cache:
+        candidates.insert(0, Path(configured_cache) / LOLA20M_FILENAME)
+    return tuple(candidates)
+
+
+def _valid_local_lola_cache(path: Path) -> bool:
+    """Accept only a readable, projected, single-band ~20 m named LOLA raster."""
+    if path.name.casefold() != LOLA20M_FILENAME.casefold() or not path.is_file():
+        return False
+    try:
+        with rasterio.open(path, sharing=False) as dataset:
+            if dataset.crs is None or not dataset.crs.is_projected or dataset.count != 1:
+                return False
+            x_resolution, y_resolution = (abs(float(value)) for value in dataset.res)
+            return (
+                dataset.width > 0 and dataset.height > 0
+                and math.isclose(x_resolution, 20.0, rel_tol=0.02)
+                and math.isclose(y_resolution, 20.0, rel_tol=0.02)
+            )
+    except (rasterio.errors.RasterioError, OSError):
+        return False
+
+
+def _resolve_lola_source(source: str | Path) -> str:
+    """Prefer an already-present recognized local cache, otherwise use bounded remote COG access."""
+    source_text = str(source)
+    if source_text.lower().startswith(("https://", "http://")):
+        for candidate in _local_lola_cache_candidates():
+            if _valid_local_lola_cache(candidate):
+                return str(candidate)
+    return source_text
 
 
 @dataclass(frozen=True)
@@ -111,9 +164,15 @@ def load_site_terrain_window(
 ) -> SiteTerrainMapData:
     """Load a cached, bounded DEM window centered on the projected map site."""
     geometry = build_site_map_geometry(site, radius_m)
-    return _read_cached_site_terrain_window(
-        str(source), geometry.center_x_m, geometry.center_y_m, geometry.radius_m
-    )
+    resolved_source = _resolve_lola_source(source)
+    try:
+        return _read_cached_site_terrain_window(
+            resolved_source, geometry.center_x_m, geometry.center_y_m, geometry.radius_m
+        )
+    except (TerrainAccessError, RasterioError, OSError) as exc:
+        raise TerrainContextUnavailable(
+            f"NASA LOLA terrain context could not be loaded from {resolved_source!r}: {exc}"
+        ) from exc
 
 
 def build_terrain_diagnostics(

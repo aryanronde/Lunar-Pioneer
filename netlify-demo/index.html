@@ -44,7 +44,7 @@
         <div>
           <div class="eyebrow">MISSION PLANNING <span>·</span> LUNAR SOUTH POLE</div>
           <h1>CLPS Lunar Mission Browser</h1>
-          <p class="subtitle">Explore lunar south-pole illumination and Earth communication windows at a candidate landing site.</p>
+          <p class="subtitle">Static frontend prototype for Site06 — Nobile Rim 1. Saved example values only; this page does not run the scientific SPICE analysis.</p>
         </div>
         <div class="demo-chip"><span></span> STATIC FRONTEND DEMO</div>
       </header>
@@ -55,7 +55,7 @@
         <span class="warning-tag">10 KM RANGE</span>
       </section>
 
-      <div class="sample-strip"><span class="sample-dot"></span><span><b>Saved example:</b> 2026-10-01 · 04:05–23:00 UTC · 60-minute sampling</span><span class="sample-note">Displayed values are sample data, not a live calculation.</span></div>
+      <div class="sample-strip"><span class="sample-dot"></span><span><b>Embedded interface fixture:</b> display-only example values</span><span class="sample-note">Not a verified analysis result; this page does not calculate or refresh them.</span></div>
       <div id="run-status" class="run-status" aria-live="polite"></div>
 
       <section class="metrics-grid" aria-label="Visibility summary">
@@ -117,7 +117,7 @@
         </div>
       </section>
 
-      <footer class="page-footer"><div class="footer-brand"><span class="footer-mark">CLPS</span><span>Mission Browser · Site06 Prototype</span></div><p>This is a frontend demonstration using saved representative sample data. The live scientific engine uses NASA SPICE geometry and LOLA terrain data; this static page does not execute those calculations.</p><div class="footer-meta">MOON_ME_DE421 <span>·</span> SAMPLE-BASED <span>·</span> LIMITED-RANGE</div></footer>
+      <footer class="page-footer"><div class="footer-brand"><span class="footer-mark">CLPS</span><span>Mission Browser · Site06 Prototype</span></div><p>This is a static frontend prototype with embedded, unverified interface fixture values; it does not fetch live NASA data or run SPICE, terrain, or visibility calculations. Use the interactive Streamlit application for calculations from local NAIF kernels and the saved Site06 horizon profile.</p><div class="footer-meta">MOON_ME_DE421 <span>·</span> STATIC FIXTURE <span>·</span> LIMITED-RANGE</div></footer>
     </main>
   </div>
 </body>

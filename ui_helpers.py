@@ -6,6 +6,8 @@ from datetime import date, datetime, time, timedelta, timezone
 from html import escape
 from typing import Iterable
 
+import plotly.graph_objects as go
+
 from core.mission_analysis import MissionAnalysisResult, MissionVisibilityWindow
 
 
@@ -23,6 +25,191 @@ def build_utc_interval(
     if end_time < start_time:
         end += timedelta(days=1)
     return _iso_utc(start), _iso_utc(end)
+
+
+def build_utc_date_range(
+    start_date: date,
+    end_date: date,
+    start_time: time,
+    end_time: time,
+) -> tuple[str, str]:
+    """Build inclusive UTC bounds; same-day reversed clocks retain overnight behavior."""
+    if end_date < start_date:
+        raise ValueError("End date must be on or after start date.")
+    start = datetime.combine(start_date, start_time, tzinfo=UTC)
+    end = datetime.combine(end_date, end_time, tzinfo=UTC)
+    if end_date == start_date and end_time < start_time:
+        end += timedelta(days=1)
+    if end < start:
+        raise ValueError("End of analysis interval must not precede its start.")
+    return _iso_utc(start), _iso_utc(end)
+
+
+def build_daily_summary_rows(
+    result: MissionAnalysisResult,
+    start_date: date,
+    end_date: date,
+) -> list[dict[str, object]]:
+    """Summarize sampled visibility by UTC date, retaining dates with no samples."""
+    if end_date < start_date:
+        raise ValueError("End date must be on or after start date.")
+
+    days: dict[date, list] = {}
+    current = start_date
+    while current <= end_date:
+        days[current] = []
+        current += timedelta(days=1)
+    for sample in result.samples:
+        timestamp = datetime.fromisoformat(sample.timestamp_utc.replace("Z", "+00:00"))
+        sample_day = timestamp.astimezone(UTC).date()
+        if sample_day in days:
+            days[sample_day].append(sample)
+
+    rows: list[dict[str, object]] = []
+    cadence = timedelta(minutes=result.sampling_interval_minutes)
+    for day, samples in days.items():
+        by_target = {
+            target: sorted(
+                (sample for sample in samples if sample.target == target and sample.visible),
+                key=lambda sample: sample.timestamp_utc,
+            )
+            for target in ("SUN", "EARTH")
+        }
+
+        def elapsed_minutes(visible_samples: list) -> int:
+            total = 0
+            run: list = []
+            previous: datetime | None = None
+            for sample in sorted(visible_samples, key=lambda item: item.timestamp_utc):
+                timestamp = datetime.fromisoformat(sample.timestamp_utc.replace("Z", "+00:00"))
+                if previous is None or timestamp - previous == cadence:
+                    run.append(sample)
+                else:
+                    total += int((previous - datetime.fromisoformat(run[0].timestamp_utc.replace("Z", "+00:00"))).total_seconds() // 60)
+                    run = [sample]
+                previous = timestamp
+            if run:
+                last = datetime.fromisoformat(run[-1].timestamp_utc.replace("Z", "+00:00"))
+                first = datetime.fromisoformat(run[0].timestamp_utc.replace("Z", "+00:00"))
+                total += int((last - first).total_seconds() // 60)
+            return total
+
+        timestamp_count = len({sample.timestamp_utc for sample in samples})
+        sun_count = sum(sample.target == "SUN" and sample.visible for sample in samples)
+        earth_count = sum(sample.target == "EARTH" and sample.visible for sample in samples)
+        overlap_samples = [
+            timestamp for timestamp in {sample.timestamp_utc for sample in samples}
+            if any(sample.target == "SUN" and sample.timestamp_utc == timestamp and sample.visible for sample in samples)
+            and any(sample.target == "EARTH" and sample.timestamp_utc == timestamp and sample.visible for sample in samples)
+        ]
+        overlap_records = [
+            next(sample for sample in samples if sample.target == "SUN" and sample.timestamp_utc == timestamp)
+            for timestamp in overlap_samples
+        ]
+        rows.append({
+            "UTC date": day.isoformat(),
+            "Data availability": "Available" if timestamp_count else "Unavailable — no samples",
+            "Sun sampled visibility": sun_count / timestamp_count if timestamp_count else None,
+            "Earth sampled visibility": earth_count / timestamp_count if timestamp_count else None,
+            "Sun-visible sampled-window duration": elapsed_minutes(by_target["SUN"]) if timestamp_count else None,
+            "Earth-visible sampled-window duration": elapsed_minutes(by_target["EARTH"]) if timestamp_count else None,
+            "Overlapping Sun/Earth duration": elapsed_minutes(overlap_records) if timestamp_count else None,
+            "Sampled timestamps": timestamp_count,
+        })
+    return rows
+
+
+def build_site_information_rows(result: MissionAnalysisResult) -> list[dict[str, str]]:
+    """Describe the supported site's coordinate, geometry, terrain, and sample provenance."""
+    site = result.site
+    timestamp_count = len({sample.timestamp_utc for sample in result.samples})
+    return [
+        {
+            "Information": "Analysis support",
+            "Availability": "Supported site",
+            "Details": "Site06 — Nobile Rim 1 only. Other landing sites are not evaluated or scientifically validated by this pipeline.",
+        },
+        {
+            "Information": "Coordinates",
+            "Availability": "Available",
+            "Details": (
+                f"{abs(site.latitude_deg):.5f}°S, {site.longitude_deg:.5f}°E; "
+                f"{site.latitude_type}, east-positive longitude."
+            ),
+        },
+        {
+            "Information": "Coordinate provenance",
+            "Availability": "Source recorded",
+            "Details": f"{site.coordinate_source}; source frame {site.source_frame}, {site.source_ephemeris}.",
+        },
+        {
+            "Information": "Sun/Earth geometry",
+            "Availability": "Audited Site06 basis",
+            "Details": "NAIF SPICE DE440 geometry transformed to the Site06 local basis in MOON_ME_DE421.",
+        },
+        {
+            "Information": "Terrain horizon used for visibility",
+            "Availability": f"{result.horizon_status}; {result.horizon_range_km:g} km range",
+            "Details": (
+                "Saved reports/site06_10km_limited_horizon.json composite profile "
+                "(5 m data within 1 km and 20 m data to 10 km); terrain beyond this radius is not evaluated."
+            ),
+        },
+        {
+            "Information": "Sampled observations",
+            "Availability": f"Available ({timestamp_count} UTC timestamps)" if timestamp_count else "Unavailable — no samples",
+            "Details": f"Sampling interval: {result.sampling_interval_minutes} minutes throughout the selected range.",
+        },
+        {
+            "Information": "LOLA map context",
+            "Availability": "Optional; shown separately",
+            "Details": "NASA LOLA 20 m DEM is map context only and is not used as a substitute for the saved visibility horizon.",
+        },
+    ]
+
+
+def build_daily_visibility_figure(rows: Iterable[dict[str, object]]) -> go.Figure:
+    """Build a daily UTC date chart with explicit calendar ticks and missing-value gaps."""
+    ordered = sorted(rows, key=lambda row: str(row["UTC date"]))
+    utc_dates = [date.fromisoformat(str(row["UTC date"])) for row in ordered]
+    figure = go.Figure()
+    for label, color, symbol in (
+        ("Sun sampled visibility", "#d98b00", "circle"),
+        ("Earth sampled visibility", "#2864a5", "diamond"),
+    ):
+        values = [row[label] for row in ordered]
+        figure.add_trace(go.Scatter(
+            x=[datetime.combine(day, time.min, tzinfo=UTC) for day in utc_dates],
+            y=[None if value is None else float(value) * 100 for value in values],
+            mode="lines+markers",
+            name=label,
+            connectgaps=False,
+            line={"color": color, "width": 2},
+            marker={"color": color, "size": 9, "symbol": symbol},
+        ))
+    if utc_dates:
+        tickvals = [datetime.combine(day, time.min, tzinfo=UTC) for day in utc_dates]
+        lower = tickvals[0] - timedelta(hours=12)
+        upper = tickvals[-1] + timedelta(hours=12)
+        axis_range = [lower.isoformat(), upper.isoformat()]
+    else:
+        tickvals = []
+        axis_range = None
+    figure.update_layout(
+        xaxis_title="UTC date",
+        yaxis_title="Sampled visibility (%)",
+        xaxis={
+            "type": "date",
+            "range": axis_range,
+            "tickmode": "array",
+            "tickvals": tickvals,
+            "ticktext": [day.strftime("%d %b") for day in utc_dates],
+        },
+        yaxis={"range": [0, 100], "ticksuffix": "%", "dtick": 20},
+        legend_title_text="Target",
+        margin={"t": 20, "b": 20},
+    )
+    return figure
 
 
 def _iso_utc(value: datetime) -> str:
@@ -134,9 +321,9 @@ def build_window_rows(windows: Iterable[MissionVisibilityWindow]) -> list[dict[s
         {
             "Start (UTC)": window.start_utc,
             "End (UTC)": window.end_utc,
-            "Elapsed duration": format_duration(window.duration_minutes),
+            "Sampled-window elapsed duration": format_duration(window.duration_minutes),
             "Samples": window.sample_count,
-            "Boundary semantics": "Sample-based; not exact rise/set",
+            "Boundary semantics": "Sample-based estimate; not exact rise/set; between-sample visibility unverified",
         }
         for window in windows
     ]

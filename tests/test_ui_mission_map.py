@@ -22,17 +22,21 @@ from core.terrain_provider import (
     LOLA20mTerrainProvider,
     TaggedMoonPosition,
     TerrainMetadata,
+    TerrainAccessError,
     TerrainWindow,
 )
 from ui_mission_map import (
     LOLA20M_MAP_LABEL,
     SiteMapGeometry,
     SiteTerrainMapData,
+    TerrainContextUnavailable,
     _plot_elevation,
     _read_cached_site_terrain_window,
+    _resolve_lola_source,
     build_site_map_figure,
     build_site_map_geometry,
     build_terrain_diagnostics,
+    load_site_terrain_window,
 )
 
 
@@ -50,6 +54,44 @@ def synthetic_window(center_x_m: float, center_y_m: float) -> TerrainWindow:
 
 
 class Site06MissionMapTest(unittest.TestCase):
+    def test_remote_dem_access_error_becomes_specific_optional_context_error(self) -> None:
+        with (
+            patch("ui_mission_map._resolve_lola_source", return_value=LOLA20M_URL),
+            patch("ui_mission_map._read_cached_site_terrain_window", side_effect=TerrainAccessError("NASA host unreachable")),
+        ):
+            with self.assertRaisesRegex(TerrainContextUnavailable, "NASA LOLA terrain context could not be loaded"):
+                load_site_terrain_window(SITE06_NOBILE_RIM_1, 10_000.0)
+
+    def test_existing_valid_local_cache_is_preferred_without_fetching_remote(self) -> None:
+        cache_path = Path("/existing-cache/LDEM_80S_20MPP_ADJ.TIF")
+        with (
+            patch("ui_mission_map._local_lola_cache_candidates", return_value=(cache_path,)),
+            patch("ui_mission_map._valid_local_lola_cache", return_value=True),
+        ):
+            self.assertEqual(_resolve_lola_source(LOLA20M_URL), str(cache_path))
+
+    def test_bad_nonterrain_exceptions_are_not_converted_to_unavailable_warning(self) -> None:
+        with patch("ui_mission_map._read_cached_site_terrain_window", side_effect=ValueError("bad map geometry")):
+            with self.assertRaisesRegex(ValueError, "bad map geometry"):
+                load_site_terrain_window(SITE06_NOBILE_RIM_1, 10_000.0)
+
+    def test_clps_map_warns_but_keeps_optional_terrain_failure_local(self) -> None:
+        from types import SimpleNamespace
+        import app
+
+        result = SimpleNamespace(site=SITE06_NOBILE_RIM_1, horizon_range_km=10.0)
+        with (
+            patch("app.load_site_terrain_window", side_effect=TerrainContextUnavailable("NASA host unreachable")),
+            patch("app.st.container") as container,
+            patch("app.st.warning") as warning,
+            patch("app.st.plotly_chart") as plot,
+        ):
+            container.return_value.__enter__.return_value = None
+            app._render_mission_map(result)
+        warning.assert_called_once()
+        self.assertIn("NASA LOLA terrain data could not be loaded", warning.call_args.args[0])
+        plot.assert_not_called()
+
     def test_site06_maps_to_finite_south_polar_projected_coordinates(self) -> None:
         geometry = build_site_map_geometry(SITE06_NOBILE_RIM_1, 10_000.0)
         self.assertTrue(isfinite(geometry.center_x_m))

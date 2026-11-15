@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import math
 import unittest
 import json
@@ -72,6 +72,18 @@ class MissionAnalysisTest(unittest.TestCase):
         self.assertEqual(result.summary_for("SUN").total_visible_minutes, 0)
         self.assertEqual(engine.calls, [])
 
+    def test_unimplemented_landing_site_is_rejected_before_analysis(self) -> None:
+        other_site = replace(SITE06_NOBILE_RIM_1, name="Unimplemented test site")
+        with self.assertRaisesRegex(NotImplementedError, "Site06"):
+            analyze_mission_window(
+                other_site,
+                "2026-10-05T00:00:00Z",
+                "2026-10-05T00:00:00Z",
+                60,
+                self.profile,
+                direction_engine_factory=lambda: self.fail("unsupported site must not run SPICE"),
+            )
+
     def test_single_timestamp_inclusive_interval(self) -> None:
         result, _ = self.analyze(
             "2026-10-05T00:00:00Z",
@@ -132,6 +144,33 @@ class MissionAnalysisTest(unittest.TestCase):
         self.assertEqual(summary.longest_visible_window_minutes, 60)
         self.assertEqual(summary.number_of_visibility_windows, 2)
         self.assertEqual(summary.visible_fraction, 3 / 4)
+
+    def test_coarse_sampling_reports_sample_span_without_claiming_continuity(self) -> None:
+        values = {
+            (f"2026-10-05T{hour:02}:00:00", "SUN"): (0.0, 5.0)
+            for hour in (0, 6, 12)
+        }
+        result, _ = self.analyze("2026-10-05T00:00:00Z", "2026-10-05T12:00:00Z", 360, values)
+        sun = result.summary_for("SUN")
+        window = next(window for window in result.visibility_windows if window.target == "SUN")
+        self.assertEqual(result.sampling_interval_minutes, 360)
+        self.assertEqual(sun.visible_fraction, 1.0)
+        self.assertEqual(sun.total_visible_minutes, 720)
+        self.assertEqual(window.sample_count, 3)
+        self.assertIn("not exact rise/set", window.boundary_note)
+
+    def test_analysis_spans_multiple_utc_days_and_normalizes_offset_boundaries(self) -> None:
+        values = {
+            (timestamp, target): (0.0, 5.0)
+            for timestamp in ("2026-10-05T23:00:00", "2026-10-06T00:00:00", "2026-10-06T01:00:00")
+            for target in ("SUN", "EARTH")
+        }
+        result, _ = self.analyze(
+            "2026-10-06T01:00:00+02:00", "2026-10-06T03:00:00+02:00", 60, values
+        )
+        self.assertEqual(result.start_utc, "2026-10-05T23:00:00Z")
+        self.assertEqual(result.end_utc, "2026-10-06T01:00:00Z")
+        self.assertEqual(len({sample.timestamp_utc for sample in result.samples}), 3)
 
     def test_end_timestamp_is_included(self) -> None:
         result, engine = self.analyze(

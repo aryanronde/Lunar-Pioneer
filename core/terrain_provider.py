@@ -108,6 +108,10 @@ class TerrainWindow:
     pixel_center_semantics: str = "Coordinates are affine-transformed pixel centers; elevations are raw source samples."
 
 
+class TerrainAccessError(RuntimeError):
+    """A raster could not be opened or a bounded terrain window could not be read."""
+
+
 @runtime_checkable
 class TerrainProvider(Protocol):
     """Interface for local or remote read-only DEM metadata and window access."""
@@ -152,7 +156,7 @@ class LOLA20mTerrainProvider:
         try:
             self._dataset = rasterio.open(source, sharing=False)
         except (rasterio.errors.RasterioError, OSError) as exc:
-            raise RuntimeError(f"Could not open LOLA DEM {self.source!r}: {exc}") from exc
+            raise TerrainAccessError(f"Could not open LOLA DEM {self.source!r}: {exc}") from exc
         if self._dataset.crs is None:
             self.close()
             raise ValueError("The LOLA raster has no CRS; refusing to project site coordinates.")
@@ -240,7 +244,7 @@ class LOLA20mTerrainProvider:
         try:
             elevation = dataset.read(1, window=window, masked=False)
         except (rasterio.errors.RasterioError, OSError) as exc:
-            raise RuntimeError(f"Could not read bounded LOLA DEM window: {exc}") from exc
+            raise TerrainAccessError(f"Could not read bounded LOLA DEM window: {exc}") from exc
 
         rows = np.arange(row_start, row_end)
         columns = np.arange(column_start, column_end)

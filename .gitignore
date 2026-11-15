@@ -3,10 +3,14 @@
 __pycache__/
 *.py[cod]
 *.pyo
+*.tmp
+*.temp
+*.part
 
 # Virtual environment
 .venv/
 venv/
+env/
 
 # Test and cache files
 .pytest_cache/
@@ -17,5 +21,7 @@ venv/
 .vscode/
 .DS_Store
 Thumbs.db
-# Large SPICE ephemeris kernel
-data/spice/de440.bsp
+# Downloaded SPICE kernels and incomplete downloads
+data/spice/*.bsp
+data/spice/*.bpc
+data/spice/*.download
